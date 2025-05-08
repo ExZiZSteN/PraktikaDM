@@ -1,4 +1,4 @@
-
+from math import log2
 def build_huffman_tree(frequencies, q=4):
     # Создаем список узлов [частота, [символ, код]]
     nodes = [[freq, [symbol, ""]] for symbol, freq in frequencies.items()]
@@ -57,7 +57,13 @@ def calculate_average_length(codes, frequencies, total):
     for symbol, code in codes.items():
         avg_length += len(code) * (frequencies[symbol] / total)
     return avg_length
-
+#Функция для подсчета энтропии
+def calculate_entropy(frequencies,total):
+    entropy = 0
+    for symbol in frequencies.keys():
+        if frequencies[symbol] != 0:
+            entropy -= frequencies[symbol]/total * log2(frequencies[symbol]/total)
+    return entropy
 s = 'ДОЛОХОВ БЫЛ ЧЕЛОВЕК СРЕДНЕГО РОСТА КУРЧАВЫЙ И С СВЕТЛЫМИ ГОЛУБЫМИ ГЛАЗАМИ ЕМУ БЫЛО ЛЕТ ДВАДЦАТЬ ПЯТЬ ОН НЕ НОСИЛ УСОВ КАК И ВСЕ ПЕХОТНЫЕ ОФИЦЕРЫ И РОТ ЕГО САМАЯ ПОРАЗИТЕЛЬНАЯ ЧЕРТА ЕГО ЛИЦА БЫЛ ВЕСЬ ВИДЕН ЛИНИИ ЭТОГО РТА БЫЛИ ЗАМЕЧАТЕЛЬНО ТОНКО ИЗОГНУТЫ В СРЕДИНЕ ВЕРХНЯЯ ГУБА ЭНЕРГИЧЕСКИ ОПУСКАЛАСЬ НА КРЕПКУЮ НИЖНЮЮ ОСТРЫМ КЛИНОМ И В УГЛАХ ОБРАЗОВЫВАЛОСЬ ПОСТОЯННО ЧТО ТО ВРОДЕ ДВУХ УЛЫБОК ПО ОДНОЙ С КАЖДОЙ СТОРОНЫ И ВСЕ ВМЕСТЕ А ОСОБЕННО В СОЕДИНЕНИИ С ТВЕРДЫМ НАГЛЫМ УМНЫМ ВЗГЛЯДОМ СОСТАВЛЯЛО ВПЕЧАТЛЕНИЕ ТАКОЕ ЧТО НЕЛЬЗЯ БЫЛО НЕ ЗАМЕТИТЬ ЭТОГО ЛИЦА ДОЛОХОВ БЫЛ НЕБОГАТЫЙ ЧЕЛОВЕК БЕЗ ВСЯКИХ СВЯЗЕЙ И НЕСМОТРЯ НА ТО ЧТО АНАТОЛЬ ПРОЖИВАЛ ДЕСЯТКИ ТЫСЯЧ ДОЛОХОВ ЖИЛ С НИМ И УСПЕЛ СЕБЯ ПОСТАВИТЬ ТАК ЧТО АНАТОЛЬ И ВСЕ ЗНАВШИЕ ИХ УВАЖАЛИ ДОЛОХОВА БОЛЬШЕ ЧЕМ АНАТОЛЯ'
 alph = {' ': 0,
         'А': 0,
@@ -110,12 +116,15 @@ avg_length = calculate_average_length(codes, alph, total)
 
 #Длина кодового слова при равномерном кодировании = 4, потомучто q={0,1,2,3} n = 33 => 4 в какой степени >= 33
 
+entropy = calculate_entropy(alph,total)
+
 # Расчет избыточности
-otvet = 4 - avg_length 
+otvet = avg_length - entropy
 
 print("Коды Хаффмана:")
 for symbol, code in codes.items():
     print(f"{symbol}: {code}")
 
 print(f"\nСредняя длина кода: {avg_length} ")
+print(f"Энтропия: {entropy}")
 print(f"Избыточность: {otvet}")
