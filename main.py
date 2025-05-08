@@ -107,8 +107,6 @@ avg_length = calculate_average_length(codes, alph, total)
 entropy = calculate_entropy(alph,total)
 
 
-#Длина кодового слова при равномерном кодировании = 6, потомучто q={0,1} n = 33 => 2 в какой степени >= 33
-
 # Расчет избыточности
 redundancy = avg_length - entropy
 
