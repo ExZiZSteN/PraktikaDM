@@ -114,7 +114,6 @@ codes = get_huffman_codes(tree)
 # Расчет средней длины кода
 avg_length = calculate_average_length(codes, alph, total)
 
-#Длина кодового слова при равномерном кодировании = 4, потомучто q={0,1,2,3} n = 33 => 4 в какой степени >= 33
 
 entropy = calculate_entropy(alph,total)
 
